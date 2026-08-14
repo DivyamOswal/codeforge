@@ -24,7 +24,7 @@ model User {
   email String @unique
   role UserRole @default(USER)
 
-  firtstName String?
+  firstName String?
   lastName String?
   imageUrl String?
 
