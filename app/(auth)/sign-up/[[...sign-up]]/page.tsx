@@ -14,6 +14,23 @@ export default function Page() {
           borderRadius: '0.375rem',
           fontFamily: 'var(--font-mono, monospace)',
         },
+        elements: {
+          rootBox: { width: '100%' },
+          cardBox: {
+            width: '100%',
+            boxShadow: 'none',
+            border: 'none',
+            background: 'transparent',
+          },
+          card: {
+            width: '100%',
+            boxShadow: 'none',
+            border: 'none',
+            background: 'transparent',
+            margin: 0,
+            padding: '2rem 1.5rem',
+          },
+        },
       }}
     />
   );
