@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { SiGithub, SiX, SiLinkedin } from "@icons-pack/react-simple-icons";
+import { SiGithub } from "@icons-pack/react-simple-icons";
+import { SiX } from "@icons-pack/react-simple-icons";
+import { LinkedinLogo } from "@phosphor-icons/react/dist/ssr";
 
 const FOOTER_LINKS = {
   Product: [
@@ -21,7 +23,7 @@ const FOOTER_LINKS = {
 const SOCIAL_LINKS = [
   { icon: <SiGithub size={16} />, href: "https://github.com", label: "GitHub" },
   { icon: <SiX size={16} />, href: "https://twitter.com", label: "Twitter" },
-  { icon: <SiLinkedin size={16} />, href: "https://linkedin.com", label: "LinkedIn" },
+  { icon: <LinkedinLogo size={16} />, href: "https://linkedin.com", label: "LinkedIn" },
 ];
 
 export const Footer = () => {
@@ -42,7 +44,7 @@ export const Footer = () => {
             </p>
             <div className="mt-6 flex items-center gap-3">
               {SOCIAL_LINKS.map((social) => (
-                
+                <a
                   key={social.label}
                   href={social.href}
                   target="_blank"
