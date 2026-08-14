@@ -48,10 +48,46 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-/* CodeForge is dark-only — :root and .dark share the same values so the
-   theme is correct whether or not next-themes (or anything else) ever
-   toggles the .dark class on <html>. */
-:root,
+:root {
+  --background: oklch(0.99 0 0);
+  --foreground: oklch(0.16 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.16 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.16 0 0);
+
+  --primary: oklch(0.62 0.18 38);
+  --primary-foreground: oklch(0.99 0 0);
+
+  --secondary: oklch(0.95 0 0);
+  --secondary-foreground: oklch(0.16 0 0);
+  --muted: oklch(0.95 0 0);
+  --muted-foreground: oklch(0.45 0 0);
+  --accent: oklch(0.95 0 0);
+  --accent-foreground: oklch(0.16 0 0);
+  --destructive: oklch(0.55 0.20 25);
+  --border: oklch(0.90 0 0);
+  --input: oklch(0.90 0 0);
+  --ring: oklch(0.62 0.18 38 / 40%);
+
+  --chart-1: oklch(0.62 0.18 38);
+  --chart-2: oklch(0.54 0.15 38);
+  --chart-3: oklch(0.46 0.12 38);
+  --chart-4: oklch(0.38 0.09 38);
+  --chart-5: oklch(0.30 0.06 38);
+
+  --radius: 0.375rem;
+
+  --sidebar: oklch(0.97 0 0);
+  --sidebar-foreground: oklch(0.16 0 0);
+  --sidebar-primary: oklch(0.62 0.18 38);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.95 0 0);
+  --sidebar-accent-foreground: oklch(0.16 0 0);
+  --sidebar-border: oklch(0.90 0 0);
+  --sidebar-ring: oklch(0.62 0.18 38 / 40%);
+}
+
 .dark {
   --background: oklch(0.16 0 0);
   --foreground: oklch(0.93 0 0);
@@ -60,7 +96,6 @@
   --popover: oklch(0.20 0 0);
   --popover-foreground: oklch(0.93 0 0);
 
-  /* single accent — ember, derived from #FF7A45 */
   --primary: oklch(0.72 0.16 38);
   --primary-foreground: oklch(0.16 0 0);
 
@@ -81,8 +116,6 @@
   --chart-4: oklch(0.38 0.08 38);
   --chart-5: oklch(0.28 0.05 38);
 
-  --radius: 0.375rem;
-
   --sidebar: oklch(0.14 0 0);
   --sidebar-foreground: oklch(0.93 0 0);
   --sidebar-primary: oklch(0.72 0.16 38);
@@ -102,48 +135,40 @@
   }
   html {
     @apply font-mono;
-    color-scheme: dark;
   }
 
-  /* selection */
   ::selection {
-    background-color: oklch(0.72 0.16 38 / 25%);
+    background-color: color-mix(in oklch, var(--primary) 25%, transparent);
     color: var(--foreground);
   }
 
-  /* focus ring, kept flat/solid — no glow, no gradient */
   :focus-visible {
     outline: 2px solid var(--ring);
     outline-offset: 2px;
   }
 }
 
-/* ---- custom scrollbar ---- */
+/* ---- custom scrollbar (theme-aware via CSS vars) ---- */
 @layer base {
   * {
     scrollbar-width: thin;
     scrollbar-color: var(--border) transparent;
   }
-
   ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
   }
-
   ::-webkit-scrollbar-track {
     background: transparent;
   }
-
   ::-webkit-scrollbar-thumb {
     background-color: var(--muted);
     border-radius: 999px;
     border: 2px solid var(--background);
   }
-
   ::-webkit-scrollbar-thumb:hover {
     background-color: var(--primary);
   }
-
   ::-webkit-scrollbar-corner {
     background: transparent;
   }

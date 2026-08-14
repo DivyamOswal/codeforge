@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { SignInButton, SignUpButton, UserButton, Show } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
+import { ModeToggle } from "@/components/mode-toggle";
 
 interface NavbarProps {
   userRole?: UserRole;
@@ -45,8 +46,9 @@ export const Navbar = ({ userRole }: NavbarProps) => {
             ))}
           </div>
 
-          {/* desktop auth */}
-          <div className="hidden items-center gap-4 md:flex">
+          {/* desktop auth + toggle */}
+          <div className="hidden items-center gap-3 md:flex">
+            <ModeToggle />
             <Show when="signed-in">
               {userRole === UserRole.ADMIN && (
                 <Link href="/create-problem">
@@ -67,8 +69,9 @@ export const Navbar = ({ userRole }: NavbarProps) => {
             </Show>
           </div>
 
-          {/* mobile: user button always visible + hamburger toggle */}
-          <div className="flex items-center gap-3 md:hidden">
+          {/* mobile: toggle + user button always visible + hamburger */}
+          <div className="flex items-center gap-2 md:hidden">
+            <ModeToggle />
             <Show when="signed-in">
               <UserButton />
             </Show>
@@ -84,7 +87,6 @@ export const Navbar = ({ userRole }: NavbarProps) => {
           </div>
         </div>
 
-        {/* mobile dropdown */}
         {open && (
           <div className="flex flex-col gap-1 border-t border-border px-4 pb-4 pt-2 md:hidden">
             {NAV_LINKS.map((link) => (
