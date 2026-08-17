@@ -1,6 +1,4 @@
 import axios from "axios"
-import { trackDynamicHoleInStaticShell } from "next/dist/server/app-render/dynamic-rendering"
-
 
 export function getJudge01languageId(language:string){
     const languageMap = {
@@ -60,7 +58,8 @@ export async function pollBatchResults(tokens:string[]){
     )
 
     if(isAllDone) return results
+    await sleep(1000)
     }
-
-
 }
+
+export const sleep = (ms:number)=> new Promise((resolve)=> setTimeout(resolve, ms))
