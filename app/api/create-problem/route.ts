@@ -102,7 +102,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    return NextResponse.json({ success: true, problem }, { status: 201 });
+    return NextResponse.json({ success: true, message:"Problem created successfully",  problem }, { status: 201 });
   } catch (err) {
     console.error("Problem creation failed:", err);
     return NextResponse.json({ error: "Failed to create problem" }, { status: 500 });
