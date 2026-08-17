@@ -37,10 +37,18 @@ export async function POST(request:NextRequest) {
                 stdin:input,
                 expected_output: output
             }))
+            // 3. Submit all testcases in one batch
+            const submissionResults = await submitBatch(submissions)
+            // 4. Extract tokens from response
+            const tokens = submissionResults.map((res:any)=>res.token)
         }
 
 
     } catch (error) {
         
     }
+}
+
+function submitBatch(submissions: { source_code: unknown; language_id: number; stdin: any; expected_output: any }[]) {
+    throw new Error('Function not implemented.')
 }

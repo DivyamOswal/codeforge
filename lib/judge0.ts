@@ -1,4 +1,5 @@
 import axios from "axios"
+import { trackDynamicHoleInStaticShell } from "next/dist/server/app-render/dynamic-rendering"
 
 
 export function getJudge01languageId(language:string){
@@ -28,5 +29,38 @@ export async function submitBatch(submissions:any){
   },
 }
 
-    const {data} = await axios.post()
+    const {data} = await axios.request(options)
+
+    return data
+}
+
+export async function pollBatchResults(tokens:string[]){
+    while(true){
+    const options = {
+  method: 'GET',
+  url: 'https://judge0-extra-ce1.p.rapidapi.com/submissions/batch',
+  params: {
+    tokens: tokens.join(","),
+    base64_encoded: 'true',
+    fields: '*'
+  },
+  headers: {
+    'x-rapidapi-key': 'de1f4e075amsh2c411d4788503a5p1b64afjsn8c6b5618bc39',
+    'x-rapidapi-host': 'judge0-extra-ce1.p.rapidapi.com',
+    'Content-Type': 'application/json'
+  }
+    };
+
+    const {data} = await axios.request(options)
+
+    const results = data.submissions
+
+    const isAllDone = results.every(
+        (r:any)=>r.status.id !==1 && r.status.id !== 2
+    )
+
+    if(isAllDone) return results
+    }
+
+
 }
