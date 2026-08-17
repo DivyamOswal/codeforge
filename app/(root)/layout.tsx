@@ -5,7 +5,12 @@ import React from 'react'
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   const result = await currentRole();
-  const userRole = result?.success ? result.role : undefined;
+
+console.log("CURRENT ROLE RESULT:", result);
+
+const userRole = result?.success ? result.role : undefined;
+
+console.log("USER ROLE PASSED TO NAVBAR:", userRole);
 
   return (
     <main className="flex min-h-screen flex-col">

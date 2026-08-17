@@ -9,7 +9,7 @@ import { Menu, X } from "lucide-react";
 import { ModeToggle } from "@/components/mode-toggle";
 
 interface NavbarProps {
-  userRole?: UserRole;
+  isAdmin?: boolean;
 }
 
 const NAV_LINKS = [
@@ -19,6 +19,8 @@ const NAV_LINKS = [
 ];
 
 export const Navbar = ({ userRole }: NavbarProps) => {
+  console.log("NAVBAR USER ROLE:", userRole);
+console.log("PRISMA ADMIN:", UserRole.ADMIN);
   const [open, setOpen] = useState(false);
 
   return (
@@ -50,9 +52,9 @@ export const Navbar = ({ userRole }: NavbarProps) => {
           <div className="hidden items-center gap-3 md:flex">
             <ModeToggle />
             <Show when="signed-in">
-              {userRole === UserRole.ADMIN && (
+              {isAdmin && (
                 <Link href="/create-problem">
-                  <Button variant="outline" size="default">
+                  <Button variant="outline" size="default" className="cursor-pointer">
                     Create Problem
                   </Button>
                 </Link>
@@ -101,7 +103,7 @@ export const Navbar = ({ userRole }: NavbarProps) => {
             ))}
 
             <Show when="signed-in">
-              {userRole === UserRole.ADMIN && (
+              {isAdmin && (
                 <Link href="/create-problem" onClick={() => setOpen(false)}>
                   <Button variant="outline" size="default" className="mt-1 w-full">
                     Create Problem
