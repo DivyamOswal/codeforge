@@ -7,6 +7,7 @@ import { ArrowRight, Code2, Play, Star, Trophy, Users, Zap } from "lucide-react"
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { SignUpButton } from "@clerk/nextjs";
+import { Reveal } from "@/components/motion/reveal";
 
 const DIFFICULTY_COPY: Record<Difficulty, { level: string; title: string; description: string }> = {
   EASY: {
@@ -90,87 +91,98 @@ export default async function Home() {
         />
 
         <div className="mx-auto max-w-6xl text-center">
-          <Badge variant="secondary" className="mb-6 rounded-sm border-border bg-secondary text-secondary-foreground">
-            <Star className="mr-2 h-3.5 w-3.5 text-primary" />
-            {userCount > 0 ? `${userCount} developers already coding` : "Now accepting early developers"}
-          </Badge>
+          <Reveal>
+            <Badge variant="secondary" className="mb-6 rounded-sm border-border bg-secondary text-secondary-foreground">
+              <Star className="mr-2 h-3.5 w-3.5 text-primary" />
+              {userCount > 0 ? `${userCount} developers already coding` : "Now accepting early developers"}
+            </Badge>
+          </Reveal>
 
-          <h1 className="mb-6 text-2xl font-semibold leading-tight text-foreground md:text-4xl lg:text-5xl">
-            Master <span className="text-primary">problem solving</span>
-            <br />
-            with code.
-          </h1>
+          <Reveal delay={0.1}>
+            <h1 className="mb-6 text-2xl font-semibold leading-tight text-foreground md:text-4xl lg:text-5xl">
+              Master <span className="text-primary">problem solving</span>
+              <br />
+              with code.
+            </h1>
+          </Reveal>
 
-          <p className="mx-auto mb-12 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-            Practice with real coding problems, track your progress, and sharpen the skills that matter
-            in technical interviews and day-to-day engineering.
-          </p>
+          <Reveal delay={0.2}>
+            <p className="mx-auto mb-12 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+              Practice with real coding problems, track your progress, and sharpen the skills that matter
+              in technical interviews and day-to-day engineering.
+            </p>
+          </Reveal>
 
-          <div className="mb-16 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            {user ? (
+          <Reveal delay={0.3}>
+            <div className="mb-16 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              {user ? (
+                <Link href="/problems">
+                  <Button size="lg" className="group cursor-pointer rounded-sm bg-primary text-primary-foreground hover:bg-primary/90">
+                    <Play className="mr-2 h-4 w-4" />
+                    Start Coding Now
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </Link>
+              ) : (
+                <SignUpButton>
+                  <Button size="lg" className="group cursor-pointer rounded-sm bg-primary text-primary-foreground hover:bg-primary/90">
+                    <Play className="mr-2 h-4 w-4" />
+                    Start Coding Now
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </SignUpButton>
+              )}
               <Link href="/problems">
-                <Button size="lg" className="group cursor-pointer rounded-sm bg-primary text-primary-foreground hover:bg-primary/90">
-                  <Play className="mr-2 h-4 w-4" />
-                  Start Coding Now
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                <Button variant="outline" size="lg" className="cursor-pointer rounded-sm border-border text-foreground hover:bg-accent">
+                  Browse Problems
                 </Button>
               </Link>
-            ) : (
-              <SignUpButton>
-                <Button size="lg" className="group cursor-pointer rounded-sm bg-primary text-primary-foreground hover:bg-primary/90">
-                  <Play className="mr-2 h-4 w-4" />
-                  Start Coding Now
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </SignUpButton>
-            )}
-            <Link href="/problems">
-              <Button variant="outline" size="lg" className="cursor-pointer rounded-sm border-border text-foreground hover:bg-accent">
-                Browse Problems
-              </Button>
-            </Link>
-          </div>
+            </div>
+          </Reveal>
 
-          <div className="mx-auto grid max-w-3xl grid-cols-1 gap-8 sm:grid-cols-3">
-            {stats.map((stat, index) => (
-              <div key={index} className="flex flex-col items-center text-center">
-                <div className="text-2xl font-semibold text-foreground md:text-3xl">{stat.number}</div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
-              </div>
-            ))}
-          </div>
+          <Reveal delay={0.4}>
+            <div className="mx-auto grid max-w-3xl grid-cols-1 gap-8 sm:grid-cols-3">
+              {stats.map((stat, index) => (
+                <div key={index} className="flex flex-col items-center text-center">
+                  <div className="text-2xl font-semibold text-foreground md:text-3xl">{stat.number}</div>
+                  <div className="text-sm text-muted-foreground">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </Reveal>
         </div>
       </section>
 
       {/* Features */}
       <section id="features" className="border-t border-border bg-card py-24">
         <div className="mx-auto max-w-6xl px-4">
-          <div className="mb-16 text-center">
-            <p className="mb-3 text-sm font-medium uppercase tracking-widest text-primary">Platform</p>
-            <h2 className="mb-4 text-3xl font-semibold text-foreground md:text-4xl">
-              Everything you need to <span className="text-primary">excel</span>
-            </h2>
-            <p className="mx-auto max-w-xl text-base text-muted-foreground">
-              Comprehensive tools and resources to help you become a better programmer.
-            </p>
-          </div>
+          <Reveal>
+            <div className="mb-16 text-center">
+              <p className="mb-3 text-sm font-medium uppercase tracking-widest text-primary">Platform</p>
+              <h2 className="mb-4 text-3xl font-semibold text-foreground md:text-4xl">
+                Everything you need to <span className="text-primary">excel</span>
+              </h2>
+              <p className="mx-auto max-w-xl text-base text-muted-foreground">
+                Comprehensive tools and resources to help you become a better programmer.
+              </p>
+            </div>
+          </Reveal>
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             {features.map((feature, index) => (
-              <Card
-                key={index}
-                className="rounded-md border-border shadow-none transition-colors duration-150 hover:border-primary/40"
-              >
-                <CardHeader>
-                  <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-sm border border-border text-primary">
-                    {feature.icon}
-                  </div>
-                  <CardTitle className="text-base font-semibold text-foreground">{feature.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-sm text-muted-foreground">{feature.description}</CardDescription>
-                </CardContent>
-              </Card>
+              <Reveal key={index} delay={index * 0.08}>
+                <Card className="rounded-md border-border shadow-none transition-colors duration-150 hover:border-primary/40">
+                  <CardHeader>
+                    <div className="mb-3 flex h-9 w-9 items-center justify-center rounded-sm border border-border text-primary">
+                      {feature.icon}
+                    </div>
+                    <CardTitle className="text-base font-semibold text-foreground">{feature.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-sm text-muted-foreground">{feature.description}</CardDescription>
+                  </CardContent>
+                </Card>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -179,39 +191,45 @@ export default async function Home() {
       {/* Problem Categories */}
       <section id="problems" className="border-t border-border py-24">
         <div className="mx-auto max-w-6xl px-4">
-          <div className="mb-16 text-center">
-            <p className="mb-3 text-sm font-medium uppercase tracking-widest text-primary">Difficulty</p>
-            <h2 className="mb-4 text-3xl font-semibold text-foreground md:text-4xl">
-              Choose your <span className="text-primary">challenge</span>
-            </h2>
-            <p className="mx-auto max-w-xl text-base text-muted-foreground">
-              From beginner-friendly puzzles to advanced algorithmic challenges.
-            </p>
-          </div>
-
-          {problemCount === 0 ? (
-            <div className="mx-auto max-w-md rounded-md border border-dashed border-border py-12 text-center">
-              <p className="text-sm text-muted-foreground">
-                No problems published yet. Check back soon.
+          <Reveal>
+            <div className="mb-16 text-center">
+              <p className="mb-3 text-sm font-medium uppercase tracking-widest text-primary">Difficulty</p>
+              <h2 className="mb-4 text-3xl font-semibold text-foreground md:text-4xl">
+                Choose your <span className="text-primary">challenge</span>
+              </h2>
+              <p className="mx-auto max-w-xl text-base text-muted-foreground">
+                From beginner-friendly puzzles to advanced algorithmic challenges.
               </p>
             </div>
+          </Reveal>
+
+          {problemCount === 0 ? (
+            <Reveal>
+              <div className="mx-auto max-w-md rounded-md border border-dashed border-border py-12 text-center">
+                <p className="text-sm text-muted-foreground">
+                  No problems published yet. Check back soon.
+                </p>
+              </div>
+            </Reveal>
           ) : (
             <div className="grid gap-4 md:grid-cols-3">
               {problemCategories.map((category, index) => (
-                <Link key={index} href={`/problems?difficulty=${Object.keys(DIFFICULTY_COPY)[index]}`}>
-                  <Card className="h-full rounded-md border-border bg-card shadow-none transition-colors duration-150 hover:border-primary/40">
-                    <CardHeader>
-                      <Badge variant="secondary" className="w-fit rounded-sm bg-secondary text-secondary-foreground">
-                        {category.level}
-                      </Badge>
-                      <CardTitle className="text-base font-semibold text-foreground">{category.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      <CardDescription className="text-sm text-muted-foreground">{category.description}</CardDescription>
-                      <div className="text-sm font-medium text-primary">{category.count}</div>
-                    </CardContent>
-                  </Card>
-                </Link>
+                <Reveal key={index} delay={index * 0.1}>
+                  <Link href={`/problems?difficulty=${Object.keys(DIFFICULTY_COPY)[index]}`}>
+                    <Card className="h-full rounded-md border-border bg-card shadow-none transition-colors duration-150 hover:border-primary/40">
+                      <CardHeader>
+                        <Badge variant="secondary" className="w-fit rounded-sm bg-secondary text-secondary-foreground">
+                          {category.level}
+                        </Badge>
+                        <CardTitle className="text-base font-semibold text-foreground">{category.title}</CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-3">
+                        <CardDescription className="text-sm text-muted-foreground">{category.description}</CardDescription>
+                        <div className="text-sm font-medium text-primary">{category.count}</div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                </Reveal>
               ))}
             </div>
           )}
@@ -221,29 +239,31 @@ export default async function Home() {
       {/* CTA */}
       <section className="border-t border-border py-24">
         <div className="mx-auto max-w-4xl px-4">
-          <div className="rounded-md border border-border bg-card px-8 py-14 text-center">
-            <h2 className="mb-4 text-3xl font-semibold text-foreground md:text-4xl">
-              Ready to start your coding journey?
-            </h2>
-            <p className="mb-8 text-base text-muted-foreground">
-              Join developers who are improving their skills every day.
-            </p>
-            {user ? (
-              <Link href="/problems">
-                <Button size="lg" className="group cursor-pointer rounded-sm bg-primary text-primary-foreground hover:bg-primary/90">
-                  Go to Problems
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </Link>
-            ) : (
-              <SignUpButton>
-                <Button size="lg" className="group cursor-pointer rounded-sm bg-primary text-primary-foreground hover:bg-primary/90">
-                  Get Started for Free
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </SignUpButton>
-            )}
-          </div>
+          <Reveal>
+            <div className="rounded-md border border-border bg-card px-8 py-14 text-center">
+              <h2 className="mb-4 text-3xl font-semibold text-foreground md:text-4xl">
+                Ready to start your coding journey?
+              </h2>
+              <p className="mb-8 text-base text-muted-foreground">
+                Join developers who are improving their skills every day.
+              </p>
+              {user ? (
+                <Link href="/problems">
+                  <Button size="lg" className="group cursor-pointer rounded-sm bg-primary text-primary-foreground hover:bg-primary/90">
+                    Go to Problems
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </Link>
+              ) : (
+                <SignUpButton>
+                  <Button size="lg" className="group cursor-pointer rounded-sm bg-primary text-primary-foreground hover:bg-primary/90">
+                    Get Started for Free
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </SignUpButton>
+              )}
+            </div>
+          </Reveal>
         </div>
       </section>
     </div>

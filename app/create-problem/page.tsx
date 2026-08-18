@@ -1,37 +1,29 @@
+import React from "react";
+import { UserRole } from "@/lib/generated/prisma/enums";
+import { getCurrentUserData } from "@/modules/auth/actions";
+import { redirect } from "next/navigation";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 
-import { ModeToggle } from '@/components/mode-toggle';
-import { Button } from '@/components/ui/button';
-import { UserRole } from '@/lib/generated/prisma/enums';
-import { getCurrentUserData } from '@/modules/auth/actions';
-import { CreateProblemForm } from '@/modules/problems/components/create-problem-form';
-import { ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import React from 'react'
+const CreateProblemPage = async () => {
+  const result = await getCurrentUserData();
 
-const CreateProblemPage = async() => {
-    const user = await getCurrentUserData();
-
-    if(!user || 'error' in user || user?.role !== UserRole.ADMIN){
-        redirect("/")
-    }
+  if (!result.success || result.user.role !== UserRole.ADMIN) {
+    redirect("/");
+  }
 
   return (
-    <section className='flex flex-col items-center justify-center  mx-4 my-4'>
-        <div className='flex flex-row justify-between items-center w-full'>
-            <Link href={"/"}>
-            <Button variant={"outline"} size={"icon"}>
-                <ArrowLeft className='size-4'/>
-            </Button>
-            </Link>
-            <h1 className='text-3xl font-bold text-amber-400'>Welcome {user.firstName || 'Admin'}! Create a Problem</h1>
-        <ModeToggle />
-        </div>
-
-    <CreateProblemForm/>
-        
+    <section className="container mx-4 my-4 flex flex-col items-center justify-center">
+      <div className="flex w-full flex-row items-center justify-between">
+        <Link href="/">
+          <Button variant="outline" size="icon">
+            <ArrowLeft className="size-4" />
+          </Button>
+        </Link>
+      </div>
     </section>
-  )
-}
+  );
+};
 
-export default CreateProblemPage
+export default CreateProblemPage;
