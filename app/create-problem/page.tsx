@@ -16,7 +16,7 @@ const CreateProblemPage = async () => {
   }
 
   return (
-    <section className="mx-auto flex max-w-4xl flex-col px-4 pb-16 pt-24 sm:px-6">
+    <section className="mx-auto flex w-full max-w-6xl flex-col px-4 pb-16 pt-24 sm:px-6">
       <div className="mb-8 flex flex-row items-center justify-between border-b border-border pb-6">
         <div className="flex items-center gap-4">
           <Link href="/">
