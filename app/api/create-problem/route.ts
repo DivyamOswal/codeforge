@@ -1,32 +1,16 @@
-import { getJudge01languageId, pollBatchResults } from '@/lib/judge0'
-import { currentRole } from '@/modules/auth/actions'
+import { getJudge01languageId, pollBatchResults, submitBatch } from '@/lib/judge0'
+import { getCurrentUserData } from '@/modules/auth/actions'
 import { prisma } from '@/lib/db'
 import { UserRole } from '@/lib/generated/prisma/enums'
 import { NextRequest, NextResponse } from 'next/server'
 
 const JUDGE0_ACCEPTED = 3
 
-async function submitBatch(
-  submissions: { source_code: string; language_id: number; stdin: string; expected_output: string }[]
-) {
-  const res = await fetch(`${process.env.JUDGE0_API_URL}/submissions/batch?base64_encoded=false`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ submissions }),
-  })
-
-  if (!res.ok) {
-    throw new Error(`Judge0 batch submit failed: ${res.status} ${await res.text()}`)
-  }
-
-  return res.json();
-}
-
 export async function POST(request: NextRequest) {
   try {
-    const roleResult = await currentRole();
+    const userResult = await getCurrentUserData();
 
-    if (!roleResult.success || roleResult.role !== UserRole.ADMIN) {
+    if (!userResult.success || userResult.user.role !== UserRole.ADMIN) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
@@ -85,8 +69,6 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    const currentUser = await roleResult;
-
     const problem = await prisma.problem.create({
       data: {
         title,
@@ -98,11 +80,14 @@ export async function POST(request: NextRequest) {
         testcases: testCases,
         codeSnippets,
         referenceSolutions,
-        userId: (await currentRole()) as any, // placeholder, see note below
+        userId: userResult.user.id,
       },
     });
 
-    return NextResponse.json({ success: true, message:"Problem created successfully",  problem }, { status: 201 });
+    return NextResponse.json(
+      { success: true, message: "Problem created successfully", problem },
+      { status: 201 }
+    );
   } catch (err) {
     console.error("Problem creation failed:", err);
     return NextResponse.json({ error: "Failed to create problem" }, { status: 500 });
