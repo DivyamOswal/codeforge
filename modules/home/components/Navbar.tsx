@@ -1,6 +1,5 @@
 "use client";
 
-import { UserRole } from "@/lib/generated/prisma/enums";
 import Link from "next/link";
 import React, { useState } from "react";
 import { SignInButton, SignUpButton, UserButton, Show } from "@clerk/nextjs";
@@ -18,9 +17,7 @@ const NAV_LINKS = [
   { href: "/profile", label: "Profile" },
 ];
 
-export const Navbar = ({ userRole }: NavbarProps) => {
-  console.log("NAVBAR USER ROLE:", userRole);
-console.log("PRISMA ADMIN:", UserRole.ADMIN);
+export const Navbar = ({ isAdmin }: NavbarProps) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -35,7 +32,6 @@ console.log("PRISMA ADMIN:", UserRole.ADMIN);
             <span className="text-primary">Forge</span>
           </Link>
 
-          {/* desktop links */}
           <div className="hidden flex-row items-center justify-center gap-x-4 md:flex">
             {NAV_LINKS.map((link) => (
               <Link
@@ -48,7 +44,6 @@ console.log("PRISMA ADMIN:", UserRole.ADMIN);
             ))}
           </div>
 
-          {/* desktop auth + toggle */}
           <div className="hidden items-center gap-3 md:flex">
             <ModeToggle />
             <Show when="signed-in">
@@ -71,7 +66,6 @@ console.log("PRISMA ADMIN:", UserRole.ADMIN);
             </Show>
           </div>
 
-          {/* mobile: toggle + user button always visible + hamburger */}
           <div className="flex items-center gap-2 md:hidden">
             <ModeToggle />
             <Show when="signed-in">
