@@ -1,29 +1,69 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { FormHeader } from "./form-header"
-
-type SampleType = "DP" | "string"
+import { Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { FormHeader } from "./form-header";
+import { useCreateProblem } from "@/hooks/use-create-problem";
+import { BasicInfoSection } from "./basic-info-section";
+import { TagsSection } from "./tags-section";
+import { TestCasesSection } from "./test-cases-section";
+import { LanguageSections } from "./language-section";
+import { AdditionalInfoSection } from "./additional-info-section";
 
 export function CreateProblemForm() {
-  const [sampleType, setSampleType] = useState<SampleType>("DP")
-
-  const handleLoadSample = () => {
-    console.log("Loading sample:", sampleType)
-  }
-
+  const {
+    form,
+    testCasesArray,
+    tagsArray,
+    isLoading,
+    sampleType,
+    setSampleType,
+    onSubmit,
+    loadSampleData,
+  } = useCreateProblem();
   return (
-    <Card className="rounded-md border-border shadow-none">
+    <div className="container mx-auto py-8 px-4 max-w-7xl">
+      <Card className="shadow-xl">
         {/* FormHeader */}
-      <FormHeader
-        sampleType={sampleType}
-        setSampleType={setSampleType}
-        onLoadSample={handleLoadSample}
-      />
-      <CardContent className="p-6">
-        {/* form fields go here */}
-      </CardContent>
-    </Card>
-  )
+        <FormHeader
+          sampleType={sampleType}
+          setSampleType={setSampleType}
+          onLoadSample={loadSampleData}
+        />
+
+        <CardContent className="p-6">
+          <form onSubmit={onSubmit} className="space-y-8">
+            <BasicInfoSection form={form}/>
+            <TagsSection form={form} tagsArray={tagsArray}/>
+            <TestCasesSection form={form} testCasesArray={testCasesArray}/>
+            <LanguageSections form={form}/>
+              <AdditionalInfoSection form={form} />
+              <SubmitButton isLoading={isLoading} />
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+
+function SubmitButton({isLoading}:any){
+return (
+     <div className="flex justify-end mt-6">
+      <Button type="submit" size="lg" disabled={isLoading} className="gap-2">
+        {isLoading ? (
+          <>
+            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            Creating...
+          </>
+        ) : (
+          <>
+            <Plus className="w-5 h-5" />
+            Create Problem
+          </>
+        )}
+      </Button>
+    </div>
+)
 }
